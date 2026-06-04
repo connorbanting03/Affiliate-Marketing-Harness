@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Affiliate Lead Finder</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #1a1d27;
+      border-bottom: 1px solid #2d3148;
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    header h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #a78bfa;
+    }
+
+    .stats {
+      display: flex;
+      gap: 20px;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+
+    .stat-value.new    { color: #60a5fa; }
+    .stat-value.opened { color: #fbbf24; }
+    .stat-value.done   { color: #4ade80; }
+    .stat-value.total  { color: #e2e8f0; }
+
+    main {
+      padding: 32px;
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 80px 20px;
+      color: #64748b;
+    }
+
+    .empty h2 { font-size: 1.2rem; margin-bottom: 8px; color: #94a3b8; }
+    .empty code {
+      display: inline-block;
+      background: #1e2130;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      color: #a78bfa;
+      margin-top: 12px;
+    }
+
+    /* ── Group sections ───────────────────────────────────────── */
+    .group { border: 1px solid #2d3148; border-radius: 14px; overflow: hidden; }
+
+    .group summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 22px;
+      background: #1a1d27;
+      user-select: none;
+    }
+
+    .group summary::-webkit-details-marker { display: none; }
+
+    .group[open] summary { border-bottom: 1px solid #2d3148; }
+
+    .group-title {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .group-label {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #c4c9e2;
+      white-space: nowrap;
+    }
+
+    .group-link {
+      font-size: 0.72rem;
+      color: #475569;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .group-stats {
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0;
+      align-items: center;
+    }
+
+    .gstat {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .gstat.new    { background: #1e3a5f; color: #60a5fa; }
+    .gstat.opened { background: #3f2e00; color: #fbbf24; }
+    .gstat.done   { background: #14532d; color: #4ade80; }
+    .gstat.total  { background: #1e2130; color: #94a3b8; }
+
+    .group-chevron {
+      font-size: 0.9rem;
+      color: #64748b;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .group[open] .group-chevron { transform: rotate(90deg); }
+
+    .group-body { padding: 22px; background: #0f1117; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #1a1d27;
+      border: 1px solid #2d3148;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color 0.2s;
+    }
+
+    .card:hover { border-color: #4c4f6b; }
+
+    .card.status-opened { border-left: 3px solid #fbbf24; }
+    .card.status-done   { border-left: 3px solid #4ade80; opacity: 0.6; }
+    .card.status-new    { border-left: 3px solid #60a5fa; }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .badge {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 3px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .badge-reddit  { background: #ff4500; color: #fff; }
+    .badge-quora   { background: #b92b27; color: #fff; }
+    .badge-other   { background: #334155; color: #94a3b8; }
+
+    .status-badge {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 3px 8px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .status-new    { background: #1e3a5f; color: #60a5fa; }
+    .status-opened { background: #3f2e00; color: #fbbf24; }
+    .status-done   { background: #14532d; color: #4ade80; }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #c4c9e2;
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    .card-situation {
+      font-size: 0.82rem;
+      color: #a78bfa;
+      background: #1e1a30;
+      border-left: 3px solid #7c3aed;
+      padding: 8px 12px;
+      border-radius: 0 6px 6px 0;
+      line-height: 1.5;
+    }
+
+    .card-snippet {
+      font-size: 0.8rem;
+      color: #64748b;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 9px 14px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      border: none;
+      transition: opacity 0.15s;
+    }
+
+    .btn:hover { opacity: 0.85; }
+
+    .btn-open { background: #4f46e5; color: #fff; }
+    .btn-done { background: #1e2130; color: #64748b; border: 1px solid #2d3148; }
+
+    .card.status-done .btn-open { background: #1e2130; color: #4ade80; border: 1px solid #14532d; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>&#127919; Affiliate Lead Finder</h1>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value total">{{ stats.total }}</div>
+        <div class="stat-label">Total</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value new">{{ stats.new }}</div>
+        <div class="stat-label">New</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value opened">{{ stats.opened }}</div>
+        <div class="stat-label">Opened</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value done">{{ stats.done }}</div>
+        <div class="stat-label">Done</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    {% if not groups %}
+    <div class="empty">
+      <h2>No leads yet</h2>
+      <p>Add your affiliate links to <strong>links.json</strong> then run the pipeline:</p>
+      <code>python pipeline.py</code>
+    </div>
+    {% else %}
+    {% for group in groups %}
+    <details class="group" open>
+      <summary>
+        <div class="group-title">
+          <span class="group-label">{{ group.label }}</span>
+          <span class="group-link">{{ group.affiliate_link }}</span>
+        </div>
+        <div class="group-stats">
+          <span class="gstat total">{{ group.stats.total }} total</span>
+          {% if group.stats.new %}<span class="gstat new">{{ group.stats.new }} new</span>{% endif %}
+          {% if group.stats.opened %}<span class="gstat opened">{{ group.stats.opened }} opened</span>{% endif %}
+          {% if group.stats.done %}<span class="gstat done">{{ group.stats.done }} done</span>{% endif %}
+        </div>
+        <span class="group-chevron">&#9654;</span>
+      </summary>
+      <div class="group-body">
+        <div class="grid">
+          {% for lead in group.leads %}
+          {% set platform = lead.platform | default('other') %}
+          {% if 'reddit' in platform %}
+            {% set badge_class = 'badge-reddit' %}
+            {% set badge_label = 'Reddit' %}
+          {% elif 'quora' in platform %}
+            {% set badge_class = 'badge-quora' %}
+            {% set badge_label = 'Quora' %}
+          {% else %}
+            {% set badge_class = 'badge-other' %}
+            {% set badge_label = platform %}
+          {% endif %}
+          <div class="card status-{{ lead.status | default('new') }}">
+            <div class="card-header">
+              <div class="card-title">{{ lead.title }}</div>
+              <span class="badge {{ badge_class }}">{{ badge_label }}</span>
+              <span class="status-badge status-{{ lead.status | default('new') }}">{{ lead.status | default('new') }}</span>
+            </div>
+            {% if lead.situation %}
+            <div class="card-situation">{{ lead.situation }}</div>
+            {% endif %}
+            {% if lead.snippet %}
+            <div class="card-snippet">{{ lead.snippet }}</div>
+            {% endif %}
+            <div class="card-actions">
+              <a class="btn btn-open" href="/open/{{ lead.id }}" target="_self">
+                {% if lead.status == 'done' %}&#10003; Opened{% else %}&#128279; Open Lead{% endif %}
+              </a>
+              {% if lead.status != 'done' %}
+              <a class="btn btn-done" href="/done/{{ lead.id }}">&#10003; Done</a>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </details>
+    {% endfor %}
+    {% endif %}
+  </main>
+</body>
+</html>
