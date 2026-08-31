@@ -1,0 +1,15 @@
+# Environments & secrets
+.venv
+.env
+
+# Python artifacts
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# Runtime data (personal leads / product lists / stage outputs)
+leads.json
+links.json
+workspace.json

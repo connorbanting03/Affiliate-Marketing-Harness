@@ -1,0 +1,7 @@
+google-adk
+litellm
+python-dotenv
+ddgs
+flask
+requests
+beautifulsoup4

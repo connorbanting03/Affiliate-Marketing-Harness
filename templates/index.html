@@ -21,6 +21,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 20px;
       position: sticky;
       top: 0;
       z-index: 10;
@@ -32,21 +33,9 @@
       color: #a78bfa;
     }
 
-    .stats {
-      display: flex;
-      gap: 20px;
-    }
-
-    .stat {
-      text-align: center;
-    }
-
-    .stat-value {
-      font-size: 1.5rem;
-      font-weight: 700;
-      line-height: 1;
-    }
-
+    .stats { display: flex; gap: 20px; }
+    .stat { text-align: center; }
+    .stat-value { font-size: 1.5rem; font-weight: 700; line-height: 1; }
     .stat-label {
       font-size: 0.7rem;
       text-transform: uppercase;
@@ -54,7 +43,6 @@
       color: #94a3b8;
       margin-top: 2px;
     }
-
     .stat-value.new    { color: #60a5fa; }
     .stat-value.opened { color: #fbbf24; }
     .stat-value.done   { color: #4ade80; }
@@ -66,27 +54,212 @@
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 36px;
+      gap: 28px;
     }
+
+    /* ── Panels ──────────────────────────────────────────────── */
+    .panel {
+      border: 1px solid #2d3148;
+      border-radius: 14px;
+      background: #1a1d27;
+      overflow: hidden;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 22px;
+      border-bottom: 1px solid #2d3148;
+      flex-wrap: wrap;
+    }
+
+    .panel-header h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #c4c9e2;
+    }
+
+    .panel-body { padding: 18px 22px; }
+
+    .add-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 18px 22px;
+      border-bottom: 1px solid #2d3148;
+      background: #14161f;
+    }
+
+    .add-form input {
+      width: 100%;
+      background: #0b0d12;
+      color: #e2e8f0;
+      border: 1px solid #2d3148;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-family: inherit;
+      font-size: 0.85rem;
+    }
+
+    .add-form input:focus { outline: none; border-color: #7c3aed; }
+    .add-form-actions { display: flex; gap: 10px; }
+
+    /* ── Buttons ─────────────────────────────────────────────── */
+    .btn {
+      padding: 9px 14px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      border: none;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .btn-primary   { background: #4f46e5; color: #fff; }
+    .btn-secondary { background: #1e2130; color: #a78bfa; border: 1px solid #2d3148; }
+    .btn-step      { background: #1e2130; color: #94a3b8; border: 1px solid #2d3148; }
+    .btn-step:hover { color: #c4c9e2; border-color: #4c4f6b; opacity: 1; }
+    .btn-done      { background: #1e2130; color: #64748b; border: 1px solid #2d3148; }
+    .btn-delete    {
+      flex: 0 0 auto;
+      background: #1e2130;
+      color: #f87171;
+      border: 1px solid #3f1d2a;
+      padding: 9px 12px;
+    }
+
+    .global-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    /* ── Job status ──────────────────────────────────────────── */
+    .job-panel { border-top: 1px solid #2d3148; }
+
+    .job-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 22px;
+      background: #14161f;
+    }
+
+    #job-name { font-size: 0.85rem; font-weight: 600; color: #c4c9e2; }
+
+    .job-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .job-badge.running { background: #1e3a5f; color: #60a5fa; }
+    .job-badge.done    { background: #14532d; color: #4ade80; }
+    .job-badge.error   { background: #450a0a; color: #f87171; }
+
+    .spinner {
+      width: 14px; height: 14px;
+      border: 2px solid #2d3148;
+      border-top-color: #60a5fa;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    #job-log {
+      margin: 0;
+      padding: 14px 22px;
+      background: #0b0d12;
+      color: #8b95ab;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.74rem;
+      line-height: 1.55;
+      max-height: 320px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* ── Products ────────────────────────────────────────────── */
+    .product-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 22px;
+      border-bottom: 1px solid #232636;
+      flex-wrap: wrap;
+    }
+    .product-row:last-child { border-bottom: none; }
+
+    .product-info { min-width: 0; flex: 1; }
+
+    .product-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #c4c9e2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 560px;
+    }
+
+    .product-url {
+      font-size: 0.7rem;
+      color: #475569;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 560px;
+      margin-top: 2px;
+    }
+
+    .product-chips { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+
+    .chip {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 2px 9px;
+      border-radius: 20px;
+      background: #1e2130;
+      color: #64748b;
+      border: 1px solid #2d3148;
+    }
+    .chip-ok { color: #a78bfa; border-color: #4c1d95; }
+    .chip-lead { color: #4ade80; border-color: #14532d; }
+
+    .product-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .copy-link-btn {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: #1e2130;
+      color: #94a3b8;
+      border: 1px solid #2d3148;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .copy-link-btn:hover { color: #c4c9e2; border-color: #4c4f6b; }
+
+    .copy-link-btn.danger { color: #f87171; border-color: #3f1d2a; }
+    .copy-link-btn.danger:hover { color: #fca5a5; border-color: #7f1d1d; }
 
     .empty {
       text-align: center;
-      padding: 80px 20px;
+      padding: 40px 20px;
       color: #64748b;
+      font-size: 0.88rem;
     }
 
-    .empty h2 { font-size: 1.2rem; margin-bottom: 8px; color: #94a3b8; }
-    .empty code {
-      display: inline-block;
-      background: #1e2130;
-      padding: 4px 12px;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      color: #a78bfa;
-      margin-top: 12px;
-    }
-
-    /* ── Group sections ───────────────────────────────────────── */
+    /* ── Lead groups ─────────────────────────────────────────── */
     .group { border: 1px solid #2d3148; border-radius: 14px; overflow: hidden; }
 
     .group summary {
@@ -102,7 +275,6 @@
     }
 
     .group summary::-webkit-details-marker { display: none; }
-
     .group[open] summary { border-bottom: 1px solid #2d3148; }
 
     .group-title {
@@ -117,6 +289,9 @@
       font-weight: 700;
       color: #c4c9e2;
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 480px;
     }
 
     .group-link {
@@ -127,12 +302,7 @@
       white-space: nowrap;
     }
 
-    .group-stats {
-      display: flex;
-      gap: 10px;
-      flex-shrink: 0;
-      align-items: center;
-    }
+    .group-stats { display: flex; gap: 10px; flex-shrink: 0; align-items: center; }
 
     .gstat {
       font-size: 0.7rem;
@@ -141,7 +311,6 @@
       border-radius: 20px;
       white-space: nowrap;
     }
-
     .gstat.new    { background: #1e3a5f; color: #60a5fa; }
     .gstat.opened { background: #3f2e00; color: #fbbf24; }
     .gstat.done   { background: #14532d; color: #4ade80; }
@@ -153,7 +322,6 @@
       transition: transform 0.2s;
       flex-shrink: 0;
     }
-
     .group[open] .group-chevron { transform: rotate(90deg); }
 
     .group-body { padding: 22px; background: #0f1117; }
@@ -174,9 +342,7 @@
       gap: 12px;
       transition: border-color 0.2s;
     }
-
     .card:hover { border-color: #4c4f6b; }
-
     .card.status-opened { border-left: 3px solid #fbbf24; }
     .card.status-done   { border-left: 3px solid #4ade80; opacity: 0.6; }
     .card.status-new    { border-left: 3px solid #60a5fa; }
@@ -198,7 +364,6 @@
       white-space: nowrap;
       flex-shrink: 0;
     }
-
     .badge-reddit  { background: #ff4500; color: #fff; }
     .badge-quora   { background: #b92b27; color: #fff; }
     .badge-other   { background: #334155; color: #94a3b8; }
@@ -244,30 +409,11 @@
       overflow: hidden;
     }
 
-    .card-actions {
-      display: flex;
-      gap: 8px;
-      margin-top: auto;
-    }
-
-    .btn {
-      flex: 1;
-      padding: 9px 14px;
-      border-radius: 8px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: none;
-      border: none;
-      transition: opacity 0.15s;
-    }
-
-    .btn:hover { opacity: 0.85; }
+    .card-actions { display: flex; gap: 8px; margin-top: auto; }
+    .card-actions .btn { flex: 1; }
+    .card-actions .btn-delete { flex: 0 0 auto; }
 
     .btn-open { background: #4f46e5; color: #fff; }
-    .btn-done { background: #1e2130; color: #64748b; border: 1px solid #2d3148; }
-
     .card.status-done .btn-open { background: #1e2130; color: #4ade80; border: 1px solid #14532d; }
   </style>
 </head>
@@ -295,12 +441,82 @@
   </header>
 
   <main>
+    <!-- ── Pipeline control ─────────────────────────────────── -->
+    <section class="panel">
+      <div class="panel-header">
+        <h2>&#9881;&#65039; Pipeline Control</h2>
+        <div class="global-actions">
+          <button class="btn btn-secondary run-btn" onclick="runAction('discover')">&#128269; Discover Products</button>
+          <button class="btn btn-primary run-btn" onclick="runAction('all')">&#9654; Run Full Pipeline</button>
+        </div>
+      </div>
+      <div id="job-panel" class="job-panel" {% if not job %}style="display:none"{% endif %}>
+        <div class="job-head">
+          <div class="spinner" id="job-spinner"></div>
+          <span id="job-name">{{ job.name if job else '' }}</span>
+          <span id="job-status" class="job-badge {{ job.status if job else '' }}">{{ job.status if job else '' }}</span>
+        </div>
+        <pre id="job-log">{{ job.log | join('\n') if job else '' }}</pre>
+      </div>
+    </section>
+
+    <!-- ── Products ─────────────────────────────────────────── -->
+    <section class="panel">
+      <div class="panel-header">
+        <h2>&#128230; Products ({{ products | length }})</h2>
+        <button class="btn btn-secondary" onclick="toggleAddForm()">&#10133; Add link</button>
+      </div>
+      <div id="add-form" class="add-form" style="display:none">
+        <input id="add-url" type="text" placeholder="Affiliate link or product URL (https://...)" />
+        <input id="add-title" type="text" placeholder="Title (optional)" />
+        <input id="add-desc" type="text" placeholder="Short description — what problem does it solve? (optional, but improves results)" />
+        <div class="add-form-actions">
+          <button class="btn btn-primary" onclick="addProduct()">Add to list</button>
+          <button class="btn btn-step" onclick="toggleAddForm()">Cancel</button>
+        </div>
+      </div>
+      {% if not products %}
+      <div class="empty">
+        No products yet — click <strong>Discover Products</strong> above, <strong>Add link</strong> here, or add entries to <code>links.json</code>.
+      </div>
+      {% else %}
+      <div class="product-list">
+        {% for p in products %}
+        <div class="product-row">
+          <div class="product-info">
+            <div class="product-title">{{ p.title }}</div>
+            <div class="product-url">{{ p.url }}</div>
+            <div class="product-chips">
+              <span class="chip {{ 'chip-ok' if p.query_count }}">{{ p.query_count }} queries</span>
+              <span class="chip {{ 'chip-ok' if p.candidate_count }}">{{ p.candidate_count }} candidates</span>
+              <span class="chip {{ 'chip-lead' if p.lead_count }}">{{ p.lead_count }} leads</span>
+              <button class="copy-link-btn" onclick="copyText('{{ p.affiliate_link }}', this)">&#128203; Copy affiliate link</button>
+              {% if p.query_count or p.candidate_count %}
+              <button class="copy-link-btn danger run-btn" onclick="clearStaged({{ p.idx }})" title="Clear staged queries and candidates">&#10005; Clear staged</button>
+              {% endif %}
+            </div>
+          </div>
+          <div class="product-actions">
+            <button class="btn btn-step run-btn" onclick="runAction('queries', {{ p.idx }})">1. Queries</button>
+            <button class="btn btn-step run-btn" onclick="runAction('search', {{ p.idx }})">2. Search</button>
+            <button class="btn btn-step run-btn" onclick="runAction('score', {{ p.idx }})">3. Score</button>
+            <button class="btn btn-primary run-btn" onclick="runAction('link', {{ p.idx }})">&#9654; Run</button>
+            <button class="btn btn-delete run-btn" onclick="deleteProduct({{ p.idx }}, '{{ p.title | truncate(45) }}')" title="Remove this product (saved leads are kept)">&#10005;</button>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </section>
+
+    <!-- ── Leads ────────────────────────────────────────────── -->
     {% if not groups %}
-    <div class="empty">
-      <h2>No leads yet</h2>
-      <p>Add your affiliate links to <strong>links.json</strong> then run the pipeline:</p>
-      <code>python pipeline.py</code>
-    </div>
+    <section class="panel">
+      <div class="panel-header"><h2>&#128203; Leads</h2></div>
+      <div class="empty">
+        No leads yet — run the pipeline on a product above and approved leads will show up here.
+      </div>
+    </section>
     {% else %}
     {% for group in groups %}
     <details class="group" open>
@@ -310,6 +526,8 @@
           <span class="group-link">{{ group.affiliate_link }}</span>
         </div>
         <div class="group-stats">
+          <button class="copy-link-btn" onclick="event.preventDefault(); copyText('{{ group.affiliate_link }}', this)">&#128203; Copy affiliate link</button>
+          <button class="copy-link-btn danger" onclick="event.preventDefault(); deleteGroup('{{ group.affiliate_link }}', '{{ group.label | truncate(45) }}')" title="Delete every lead in this group">&#10005; Delete all</button>
           <span class="gstat total">{{ group.stats.total }} total</span>
           {% if group.stats.new %}<span class="gstat new">{{ group.stats.new }} new</span>{% endif %}
           {% if group.stats.opened %}<span class="gstat opened">{{ group.stats.opened }} opened</span>{% endif %}
@@ -350,6 +568,7 @@
               {% if lead.status != 'done' %}
               <a class="btn btn-done" href="/done/{{ lead.id }}">&#10003; Done</a>
               {% endif %}
+              <button class="btn btn-delete" onclick="deleteLead('{{ lead.id }}')" title="Delete this lead">&#10005;</button>
             </div>
           </div>
           {% endfor %}
@@ -359,5 +578,135 @@
     {% endfor %}
     {% endif %}
   </main>
+
+  <script>
+    let pollTimer = null;
+    let initialBusy = {{ 'true' if busy else 'false' }};
+
+    function setBusy(busy) {
+      document.querySelectorAll('.run-btn').forEach(b => { b.disabled = busy; });
+      document.getElementById('job-spinner').style.display = busy ? 'block' : 'none';
+    }
+
+    function copyText(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        const old = btn.innerHTML;
+        btn.innerHTML = '&#10003; Copied';
+        setTimeout(() => { btn.innerHTML = old; }, 1500);
+      });
+    }
+
+    async function runAction(action, idx) {
+      const url = idx === undefined ? '/run/' + action : '/run/' + action + '/' + idx;
+      try {
+        const res = await fetch(url, { method: 'POST' });
+        const data = await res.json();
+        if (!data.ok) { alert(data.error || 'Could not start job.'); return; }
+        document.getElementById('job-panel').style.display = '';
+        startPolling();
+      } catch (e) {
+        alert('Could not start job: ' + e);
+      }
+    }
+
+    function startPolling() {
+      setBusy(true);
+      if (pollTimer) clearInterval(pollTimer);
+      pollTimer = setInterval(poll, 1500);
+      poll();
+    }
+
+    async function poll() {
+      let data;
+      try {
+        const res = await fetch('/status');
+        data = await res.json();
+      } catch (e) { return; }
+      const job = data.job;
+      if (!job) return;
+
+      document.getElementById('job-panel').style.display = '';
+      document.getElementById('job-name').textContent = job.name;
+      const badge = document.getElementById('job-status');
+      badge.textContent = job.status;
+      badge.className = 'job-badge ' + job.status;
+
+      const log = document.getElementById('job-log');
+      const atBottom = log.scrollTop + log.clientHeight >= log.scrollHeight - 40;
+      log.textContent = job.log.join('\n');
+      if (atBottom) log.scrollTop = log.scrollHeight;
+
+      if (job.status !== 'running') {
+        clearInterval(pollTimer);
+        pollTimer = null;
+        setBusy(false);
+        // Refresh products/leads/stats; the finished job log re-renders server-side
+        setTimeout(() => location.reload(), 1200);
+      }
+    }
+
+    async function postAndReload(url, body) {
+      const opts = { method: 'POST' };
+      if (body) {
+        opts.headers = { 'Content-Type': 'application/json' };
+        opts.body = JSON.stringify(body);
+      }
+      let data = {};
+      try {
+        const res = await fetch(url, opts);
+        data = await res.json().catch(() => ({}));
+        if (res.ok && data.ok !== false) { location.reload(); return; }
+      } catch (e) { data = { error: String(e) }; }
+      alert(data.error || 'Action failed.');
+    }
+
+    function deleteLead(leadId) {
+      if (!confirm('Delete this lead permanently?')) return;
+      postAndReload('/delete/' + leadId);
+    }
+
+    function deleteGroup(link, label) {
+      if (!confirm('Delete ALL leads for "' + label + '"? This cannot be undone.')) return;
+      postAndReload('/leads/delete-group', { affiliate_link: link });
+    }
+
+    function deleteProduct(idx, title) {
+      // No confirm — delete is immediate, removes the entry from links.json
+      postAndReload('/products/delete/' + idx);
+    }
+
+    function clearStaged(idx) {
+      // No confirm — clears this product's staged data from workspace.json
+      postAndReload('/workspace/clear/' + idx);
+    }
+
+    function toggleAddForm() {
+      const form = document.getElementById('add-form');
+      const showing = form.style.display !== 'none';
+      form.style.display = showing ? 'none' : 'flex';
+      if (!showing) document.getElementById('add-url').focus();
+    }
+
+    function addProduct() {
+      const url = document.getElementById('add-url').value.trim();
+      if (!url) { alert('Paste an affiliate link or product URL first.'); return; }
+      postAndReload('/products/add', {
+        url: url,
+        title: document.getElementById('add-title').value.trim(),
+        description: document.getElementById('add-desc').value.trim(),
+      });
+    }
+
+    // Enter submits the add-link form from any of its fields
+    document.querySelectorAll('#add-form input').forEach(inp => {
+      inp.addEventListener('keydown', e => { if (e.key === 'Enter') addProduct(); });
+    });
+
+    // Resume polling if a job was already running when the page loaded
+    if (initialBusy) startPolling();
+    // Keep the log scrolled to the end on load
+    const logEl = document.getElementById('job-log');
+    if (logEl) logEl.scrollTop = logEl.scrollHeight;
+  </script>
 </body>
 </html>
